@@ -2,9 +2,8 @@ classdef dataSet
     
     properties
         set = []
-        ansRight = []
-        ansLeft = []
-        ans = [false, false, false, false, false, false, false]
+        ansRight = [false, false, false, false, false, false, false]
+        ansLeft = [false, false, false, false, false, false, false]
         arraySet = []
     end
     
@@ -15,16 +14,20 @@ classdef dataSet
             
             % Dividing parameters into groups
             N = randperm(criteriaNum);
-            obj.ansRight = [N(1), N(2), N(3)];
-            obj.ansLeft = [N(4), N(5), N(6), N(7)];
+
+            obj.ansRight(N(1)) = true;
+            obj.ansRight(N(2)) = true;
+            obj.ansRight(N(3)) = true;
             
-            obj.ans(N(1)) = true;
-            obj.ans(N(2)) = true;
-            obj.ans(N(3)) = true;
+            obj.ansLeft(N(4)) = true;
+            obj.ansLeft(N(5)) = true;
+            obj.ansLeft(N(6)) = true;
+            obj.ansLeft(N(7)) = true;
+          
             
             % Generating objects with these parameters
             for i = 1:1:objectNum
-                newDataObject = dataObject(obj.ans);
+                newDataObject = dataObject(obj.ansRight);
                 obj.set = [obj.set newDataObject];
                 obj.arraySet = [obj.arraySet; newDataObject.criteriaValues];
             end
