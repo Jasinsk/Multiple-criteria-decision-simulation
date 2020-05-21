@@ -4,6 +4,7 @@ classdef dataSet
         set = []
         ansRight = [false, false, false, false, false, false, false]
         ansLeft = [false, false, false, false, false, false, false]
+        defaultValues = []
         arraySet = []
     end
     
@@ -23,11 +24,13 @@ classdef dataSet
             obj.ansLeft(N(5)) = true;
             obj.ansLeft(N(6)) = true;
             obj.ansLeft(N(7)) = true;
-          
+            
+            % Generating default values for set
+            defaultValues = randi(100, 1, 7);
             
             % Generating objects with these parameters
-            for i = 1:1:objectNum
-                newDataObject = dataObject(obj.ansRight);
+            for i = 1:objectNum
+                newDataObject = dataObject(obj.ansRight, defaultValues);
                 obj.set = [obj.set newDataObject];
                 obj.arraySet = [obj.arraySet; newDataObject.criteriaValues];
             end
