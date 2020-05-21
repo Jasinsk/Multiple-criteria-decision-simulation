@@ -1,0 +1,34 @@
+classdef dataObject
+
+   properties
+      Crit1 {mustBeNumeric}
+      Crit2 {mustBeNumeric}
+      Crit3 {mustBeNumeric}
+      Crit4 {mustBeNumeric}
+      Crit5 {mustBeNumeric}
+      Crit6 {mustBeNumeric}
+      Crit7 {mustBeNumeric}
+      
+      Criteria = [];
+   end
+
+   methods
+        function obj = dataObject(chosenCriteria)
+
+            % generate controlled random criteria values
+            for i = 1:7
+               if chosenCriteria(i) == true 
+            end
+            obj.Crit1 = 1;
+            obj.Crit2 = 2;
+            obj.Crit3 = 3;
+            obj.Crit4 = 4;
+            obj.Crit5 = 5;
+            obj.Crit6 = 6;
+            obj.Crit7 = 7;
+            
+            % creating workable output
+            obj.Criteria = [obj.Crit1, obj.Crit2, obj.Crit3, obj.Crit4, obj.Crit5, obj.Crit6, obj.Crit7];
+        end
+    end
+end
