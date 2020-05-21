@@ -5,6 +5,7 @@ classdef dataSet
         ansRight = []
         ansLeft = []
         ans = [false, false, false, false, false, false, false]
+        arraySet = []
     end
     
     methods
@@ -23,7 +24,9 @@ classdef dataSet
             
             % Generating objects with these parameters
             for i = 1:1:objectNum
-                obj.set = [obj.set dataObject(obj.ans)];
+                newDataObject = dataObject(obj.ans);
+                obj.set = [obj.set newDataObject];
+                obj.arraySet = [obj.arraySet; newDataObject.criteriaValues];
             end
             
         end

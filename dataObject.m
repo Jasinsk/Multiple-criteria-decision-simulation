@@ -10,13 +10,11 @@ classdef dataObject
             % generate controlled random criteria values
             for i = 1:7
                if chosenCriteria(i) == true
-                   criteriaValues(i) = 1;
+                   obj.criteriaValues(i) = 1;
                else 
-                   criteriaValues(i) = 0;
+                   obj.criteriaValues(i) = 0;
                end
             end
-            
-            criteriaValues
         end
     end
 end
