@@ -1,31 +1,33 @@
 clearvars
 clc
 
+addpath ./permn/
+
 % custom environment
-observationInfo = rlNumericSpec([50 1]);
-observationInfo.Name = 'Objects States';
-actionInfo = rlFiniteSetSpec({[0 1]},{[0 1]},{[0 1]},{[0 1]},{[0 1]},{[0 1]},{[0 1]}); % Possible actions (0/1) for each of seven criteria
+observationInfo = rlNumericSpec([50 7]);
+observationInfo.Name = 'Objects';
+actionInfo = rlFiniteSetSpec(num2cell(permn([0 1],7),2)); % Possible actions (0/1) for each of seven criteria
 actionInfo.Name = 'Action on Criteria';
 
 env = rlFunctionEnv(observationInfo,actionInfo,'stepFunction','resetFunction');
 
 % custom agent
 actInfo = getActionInfo(env);
-actDimensions = actInfo.Dimensions;
+actDimensions = actInfo.Dimension;
 
 obsInfo = getObservationInfo(env);
-obsDimensions = obsInfo.Dimensions;
+obsDimensions = obsInfo.Dimension;
 
 % create the network to be used as approximator in the critic
 criticNetwork = [
-    sequenceInputLayer([50 7 1],"Name","observation")
+    sequenceInputLayer([50 7 1],"Name","obs")
     fullyConnectedLayer(7,"Name","fc_1")
     reluLayer("Name","relu")
     fullyConnectedLayer(7,"Name","fc_2")];
 
-opt = rlRepresentationOptions('LearnRate',0.0001);
-critic = rlValueRepresentation(criticNetwork,obsInfo,actInfo,...
-        'Observation',{'observation'},opt);
+opt = rlRepresentationOptions('LearnRate',5e-2,'GradientThreshold',1);
+critic = rlValueRepresentation(criticNetwork,obsInfo,...
+        'Observation',{'obs'},opt);
 
 % create the network to be used as approximator in the actor
 actorNetwork = [
@@ -47,25 +49,3 @@ opt = rlTrainingOptions(...
     'StopTrainingCriteria',"AverageReward",...
     'StopTrainingValue',480);
 trainStats = train(agent,env,opt);
-    
-function [initialObservation, loggedSignal] = resetFunction()
-
-loggedSignal.State = createObjects();
-initialObservation = loggedSignal.State;
-
-end
-
-function [nextObs,reward,loggedSignals] = stepFunction(action,loggedSignals,oracleAction)
-% Define the environment constants.
-rewardValue = 1; % Reward each time criterion is appropriately classified
-penaltyValue = -10; % Penalty each time criterion is wrongly classified
-
-nextObs = createObjects();
-
-if action == oracleAction
-    reward = rewardValue;
-else
-    reward = penaltyValue;
-end
-
-end
