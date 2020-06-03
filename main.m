@@ -1,8 +1,18 @@
 clc, clear all
 
-data = dataSet(50, 8, 7);
-B = data.arraySet;
+objectsNum = 50;
+criteriaNum = 8;
+difLevel=7;
+data = dataSet(objectsNum, criteriaNum, difLevel);
 
+for i=1:criteriaNum
+    if data.ansRight(i)==1
+        plot(data.arraySet(:,i));
+        hold on
+    else
+        plot(data.arraySet(:,i),'--');
+    end
+end
 %% Unsupervised Approach
 % option 1
 % [Y,Xf,Af] = myNeuralNetworkFunction(inputs);
