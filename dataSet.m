@@ -9,7 +9,7 @@ classdef dataSet
     end
     
     methods
-        function obj = dataSet(objectNum, criteriaNum)
+        function obj = dataSet(objectNum, criteriaNum, difLevel)
             % We would like to add criteriaNum and randomness parameters
             % into this function
             
@@ -30,7 +30,7 @@ classdef dataSet
             
             % Generating objects with these parameters
             for i = 1:objectNum
-                newDataObject = dataObject(obj.ansRight, defaultValues);
+                newDataObject = dataObject(obj.ansRight, defaultValues, difLevel);
                 obj.set = [obj.set newDataObject];
                 obj.arraySet = [obj.arraySet; newDataObject.criteriaValues];
             end
