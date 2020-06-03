@@ -5,12 +5,15 @@ criteriaNum = 8;
 difLevel=7;
 data = dataSet(objectsNum, criteriaNum, difLevel);
 
+figure
 for i=1:criteriaNum
+    subplot(2,4,i)
     if data.ansRight(i)==1
-        plot(data.arraySet(:,i));
-        hold on
+        histogram(data.arraySet(:,i));
+        title(['Criterion #' num2str(i) ', R'])
     else
-        plot(data.arraySet(:,i),'--');
+        histogram(data.arraySet(:,i));
+        title(['Criterion #' num2str(i) ', L'])
     end
 end
 %% Unsupervised Approach
