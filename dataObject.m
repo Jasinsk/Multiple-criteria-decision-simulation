@@ -7,7 +7,7 @@ classdef dataObject
    methods
         function obj = dataObject(chosenCriteria, defaultValues, difLevel)
             mean = 1;
-            sigma = 0.1;
+            sigma = 5;
 
             % put ones and zeros as left and right
             if difLevel == 1
