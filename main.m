@@ -60,3 +60,45 @@ options = trainingOptions('adam', ...
 net = trainNetwork(XTrain,YTrain,layers,options);
 YPred = classify(net,XValidation,'MiniBatchSize',miniBatchSize);
 acc = mean(YPred == YValidation);
+
+%% alternative
+objectsNum = 50;
+criteriaNum = 8;
+difLevel = 7;
+trainSetSize = 70;
+testSetSize = 30;
+for i=1:trainSetSize
+    data = dataSet(objectsNum, criteriaNum, difLevel);
+    [XTrain{i},YTrain{i}] = deal(data.arraySet,categorical(data.ansRight));
+end
+
+for j=1:testSetSize
+    data = dataSet(objectsNum, criteriaNum, difLevel);
+    [XValidation{j},YValidation{j}] = deal(data.arraySet,categorical(data.ansRight));
+end
+
+layers = [
+    sequenceInputLayer(50,"Name","input")
+    lstmLayer(100,"Name","lstm","OutputMode","sequence")
+    fullyConnectedLayer(2,"Name","fc")
+    softmaxLayer("Name","softmax")
+    classificationLayer("Name","classoutput")];
+
+miniBatchSize = 27;
+options = trainingOptions('adam', ...
+    'ExecutionEnvironment','cpu', ...
+    'MaxEpochs',100, ...
+    'MiniBatchSize',miniBatchSize, ...
+    'ValidationData',{XValidation,YValidation}, ...
+    'GradientThreshold',2, ...
+    'Shuffle','every-epoch', ...
+    'Verbose',false, ...
+    'Plots','training-progress');
+
+net = trainNetwork(XTrain,YTrain,layers,options);
+YPred = classify(net,XValidation,'MiniBatchSize',miniBatchSize);
+acc = 0;
+for i=1:length(YPred)
+    acc = acc + sum(YPred{i} == YValidation{i});
+end
+acc = acc/(length(YPred)*length(YPred{i}));
