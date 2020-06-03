@@ -17,7 +17,7 @@ classdef dataObject
             % puts default values as right and zeros as left
             elseif difLevel == 2
 
-                for i = 1:7
+                for i = 1:length(defaultValues)
                     if chosenCriteria(i) == 1
                         obj.criteriaValues(i) = defaultValues(i);
                     else
@@ -29,7 +29,7 @@ classdef dataObject
             elseif difLevel == 3
                 rightMultiplier = rand + 0.5;
 
-                for i = 1:7
+                for i = 1:length(defaultValues)
                     if chosenCriteria(i) == 1
                         obj.criteriaValues(i) = defaultValues(i) * (rightMultiplier * normrnd(mean,sigma));
                     else
@@ -42,7 +42,7 @@ classdef dataObject
             elseif difLevel == 4
                 rightMultiplier = rand + 0.5; 
 
-                for i = 1:7
+                for i = 1:length(defaultValues)
                     if chosenCriteria(i) == 1
                         obj.criteriaValues(i) = defaultValues(i) * (rightMultiplier * normrnd(mean,sigma));
                     else
@@ -56,7 +56,7 @@ classdef dataObject
                 rightMultiplier = rand + 0.5; %these will have to be changes to give these trends different characteristics
                 leftMultiplier = (rand + 0.5) * 0.05;
 
-                for i = 1:7
+                for i = 1:length(defaultValues)
                     if chosenCriteria(i) == 1
                         obj.criteriaValues(i) = defaultValues(i) * (rightMultiplier * normrnd(mean,sigma));
                     else
@@ -70,13 +70,27 @@ classdef dataObject
                 rightMultiplier = rand + 0.5; %these will have to be changes to give these trends different characteristics
                 leftMultiplier = rand + 0.5;
 
-                for i = 1:7
+                for i = 1:length(defaultValues)
                     if chosenCriteria(i) == 1
                         obj.criteriaValues(i) = defaultValues(i) * (rightMultiplier * normrnd(mean,sigma));
                     else
                         obj.criteriaValues(i) = defaultValues(i) * (leftMultiplier * normrnd(mean,sigma));
                     end
                 end
+                
+            % generating values with randomized trends on both right and
+            % left
+            elseif difLevel == 7
+                rightMultiplier = rand + 0.5; %these will have to be changes to give these trends different characteristics
+                leftMultiplier = rand + 0.5;
+
+                for i = 1:length(defaultValues)
+                    if chosenCriteria(i) == 1
+                        obj.criteriaValues(i) = defaultValues(i) * (rightMultiplier * normrnd(mean,sigma));
+                    else
+                        obj.criteriaValues(i) = defaultValues(i) * (leftMultiplier * ((rand * 0.3) + 0.85));
+                    end
+                end  
             end
         end
     end

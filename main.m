@@ -1,6 +1,6 @@
 clc, clear all
 
-data = dataSet(50, 7, 1);
+data = dataSet(50, 8, 7);
 B = data.arraySet;
 
 %% Unsupervised Approach
